@@ -1,968 +1,1021 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>เกมจับคู่แคว้นโบราณ</title>
+<title>เกมโยงเส้นจับคู่แคว้นโบราณ</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, "Noto Sans Thai", sans-serif;
-      background: linear-gradient(135deg, #f6e7c1, #dcefdc);
-      min-height: 100vh;
-      color: #333;
-    }
+body {
+  margin: 0;
+  font-family: Arial, "Noto Sans Thai", sans-serif;
+  background: linear-gradient(135deg, #f5e6bd, #d9ead3);
+  color: #333;
+}
 
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 20px;
-    }
+.container {
+  max-width: 1250px;
+  margin: auto;
+  padding: 20px;
+}
 
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 8px 25px rgba(0,0,0,.15);
-      margin-bottom: 20px;
-    }
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.12);
+}
 
-    h1 {
-      text-align: center;
-      margin-top: 0;
-    }
+h1 {
+  text-align: center;
+}
 
-    h2 {
-      margin-top: 0;
-    }
+.subtitle {
+  text-align: center;
+  color: #666;
+}
 
-    .subtitle {
-      text-align: center;
-      color: #666;
-    }
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  font-size: 16px;
+}
 
-    input {
-      width: 100%;
-      padding: 14px;
-      margin: 8px 0;
-      border: 2px solid #ddd;
-      border-radius: 10px;
-      font-size: 16px;
-    }
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    input:focus {
-      outline: none;
-      border-color: #7b9e6b;
-    }
+.primary-btn {
+  width: 100%;
+  margin-top: 15px;
+  background: #4f7d45;
+  color: white;
+}
 
-    button {
-      border: none;
-      padding: 14px 20px;
-      border-radius: 12px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: .2s;
-    }
+.game-page,
+.result-page {
+  display: none;
+}
 
-    button:hover {
-      transform: translateY(-2px);
-    }
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
 
-    .start-btn,
-    .submit-btn {
-      width: 100%;
-      background: #4f7d45;
-      color: white;
-      margin-top: 15px;
-    }
+.info-box {
+  background: #fff3cd;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: bold;
+}
 
-    .game {
-      display: none;
-    }
+.instructions {
+  text-align: center;
+  background: #e7f3ff;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
 
-    .result {
-      display: none;
-      text-align: center;
-    }
+.game-board {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 70px;
+  min-height: 650px;
+}
 
-    .timer-box {
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      background: #fff3cd;
-      padding: 12px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-    }
+.column {
+  position: relative;
+  z-index: 2;
+}
 
-    .progress {
-      text-align: center;
-      font-size: 18px;
-      margin-bottom: 15px;
-    }
+.column h2 {
+  text-align: center;
+}
 
-    .game-area {
-      display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: 25px;
-    }
+.item {
+  position: relative;
+  background: #e5f0fa;
+  border-radius: 15px;
+  padding: 16px;
+  margin-bottom: 15px;
+  min-height: 65px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  box-shadow: 0 3px 8px rgba(0,0,0,.08);
+}
 
-    .column {
-      background: #f8f8f8;
-      padding: 15px;
-      border-radius: 15px;
-    }
+.answer-item {
+  background: #fff4cc;
+}
 
-    .kingdom {
-      padding: 15px;
-      background: #dceefd;
-      border-radius: 12px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      border: 3px solid transparent;
-      font-weight: bold;
-    }
+.connector {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: crosshair;
+  border: 4px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  z-index: 5;
+}
 
-    .kingdom:hover {
-      background: #c7e3fa;
-    }
+.left-dot {
+  right: -12px;
+  background: #3976a3;
+}
 
-    .kingdom.selected {
-      border-color: #3976a3;
-      background: #b9dbf5;
-    }
+.right-dot {
+  left: -12px;
+  background: #d69e00;
+}
 
-    .kingdom.completed {
-      background: #d8efd2;
-    }
+.item.connected {
+  outline: 3px solid #4f9b55;
+}
 
-    .answers {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
+svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
 
-    .answer {
-      padding: 14px;
-      background: #fff3cd;
-      border-radius: 12px;
-      cursor: pointer;
-      border: 3px solid transparent;
-      min-height: 60px;
-      display: flex;
-      align-items: center;
-    }
+.line {
+  stroke: #e05a47;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
 
-    .answer:hover {
-      background: #ffe69c;
-    }
+.temp-line {
+  stroke: #777;
+  stroke-width: 4;
+  stroke-dasharray: 8 6;
+  stroke-linecap: round;
+}
 
-    .answer.selected-answer {
-      border-color: #d69e00;
-      background: #ffe08a;
-    }
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
 
-    .answer.used-by-other {
-      opacity: .35;
-      pointer-events: none;
-    }
+.controls button {
+  flex: 1;
+}
 
-    .selected-info {
-      background: #eaf5e6;
-      padding: 15px;
-      border-radius: 12px;
-      margin-bottom: 15px;
-      text-align: center;
-      font-weight: bold;
-    }
+.clear-btn {
+  background: #d9534f;
+  color: white;
+}
 
-    .hint {
-      text-align: center;
-      color: #666;
-      margin-bottom: 20px;
-    }
+.submit-btn {
+  background: #4f7d45;
+  color: white;
+}
 
-    .loading {
-      display: none;
-      text-align: center;
-      margin-top: 15px;
-      font-weight: bold;
-    }
+.result-page {
+  text-align: center;
+}
 
-    .score {
-      font-size: 35px;
-      font-weight: bold;
-      color: #4f7d45;
-    }
+.score {
+  font-size: 42px;
+  font-weight: bold;
+}
 
-    @media (max-width: 800px) {
-      .game-area {
-        grid-template-columns: 1fr;
-      }
+@media (max-width: 800px) {
 
-      .answers {
-        grid-template-columns: 1fr;
-      }
+  .game-board {
+    grid-template-columns: 1fr 1fr;
+    gap: 45px;
+    min-height: 850px;
+  }
 
-      .container {
-        padding: 10px;
-      }
+  .item {
+    font-size: 14px;
+    padding: 12px;
+    min-height: 70px;
+  }
 
-      .card {
-        padding: 18px;
-      }
-    }
-  </style>
+  .answers-column .item {
+    margin-bottom: 10px;
+  }
+
+  .connector {
+    width: 22px;
+    height: 22px;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <!-- หน้าเริ่มต้น -->
-  <div class="card" id="startPage">
+<!-- หน้าเริ่มต้น -->
 
-    <h1>🏛️ เกมจับคู่แคว้นโบราณ</h1>
+<div class="card" id="startPage">
 
-    <p class="subtitle">
-      จับคู่แคว้นโบราณกับหลักฐานสำคัญและจังหวัดในปัจจุบัน
-    </p>
+<h1>🏛️ เกมโยงเส้นจับคู่แคว้นโบราณ</h1>
 
-    <input
-      type="text"
-      id="studentName"
-      placeholder="👤 ชื่อ-นามสกุล"
-    >
+<p class="subtitle">
+โยงเส้นจับคู่แคว้นกับหลักฐานและจังหวัดให้ถูกต้อง
+</p>
 
-    <input
-      type="text"
-      id="studentClass"
-      placeholder="🏫 ชั้น เช่น ม.1/1"
-    >
+<input id="studentName" placeholder="👤 ชื่อ-นามสกุล">
 
-    <input
-      type="number"
-      id="studentNumber"
-      placeholder="🔢 เลขที่"
-    >
+<input id="studentClass" placeholder="🏫 ชั้น เช่น ม.1/1">
 
-    <button class="start-btn" onclick="startGame()">
-      ▶️ เริ่มเกม
-    </button>
+<input id="studentNumber" placeholder="🔢 เลขที่">
 
-  </div>
+<button class="primary-btn" onclick="startGame()">
+▶️ เริ่มเกม
+</button>
+
+</div>
 
 
-  <!-- หน้าเกม -->
-  <div class="card game" id="gamePage">
+<!-- หน้าเกม -->
 
-    <h1>🎮 จับคู่ให้ถูกต้อง</h1>
+<div class="card game-page" id="gamePage">
 
-    <div class="timer-box">
-      ⏱️ เวลา: <span id="timer">00:00</span>
-    </div>
+<h1>🎮 เกมโยงเส้นจับคู่</h1>
 
-    <div class="progress">
-      จับคู่แล้ว <span id="progress">0</span> / 14 ข้อ
-    </div>
+<div class="top-bar">
 
-    <div class="selected-info" id="selectedInfo">
-      👈 กรุณาเลือกแคว้นก่อน
-    </div>
+<div class="info-box">
+⏱️ เวลา: <span id="timer">00:00</span>
+</div>
 
-    <div class="hint">
-      💡 เลือกแคว้น 1 แคว้น แล้วเลือกคำตอบที่เกี่ยวข้องจำนวน 2 ข้อ
-    </div>
+<div class="info-box">
+🔗 โยงแล้ว: <span id="progress">0</span> / 14
+</div>
 
-    <div class="game-area">
+</div>
 
-      <!-- ฝั่งซ้าย -->
-      <div class="column">
+<div class="instructions">
+👆 กดค้างที่จุด 🔵 ของแคว้น แล้วลากไปปล่อยที่จุด 🟡 ของคำตอบ
+<br>
+💡 แต่ละแคว้นต้องโยงได้ 2 คำตอบ
+</div>
 
-        <h2>🏛️ แคว้น</h2>
+<div class="game-board" id="gameBoard">
 
-        <div id="kingdomList"></div>
+<svg id="svgLines"></svg>
 
-      </div>
+<div class="column kingdoms-column">
 
+<h2>🏛️ แคว้น</h2>
 
-      <!-- ฝั่งขวา -->
-      <div class="column">
+<div id="kingdomList"></div>
 
-        <h2>🧩 คำตอบ</h2>
-
-        <div class="answers" id="answerList"></div>
-
-      </div>
-
-    </div>
-
-    <button class="submit-btn" onclick="submitGame()">
-      📤 ส่งคำตอบและดูคะแนน
-    </button>
-
-    <div class="loading" id="loading">
-      ⏳ กำลังบันทึกคะแนน...
-    </div>
-
-  </div>
+</div>
 
 
-  <!-- หน้าผลลัพธ์ -->
-  <div class="card result" id="resultPage">
+<div class="column answers-column">
 
-    <h1>🎉 ทำเกมเสร็จแล้ว!</h1>
+<h2>🧩 คำตอบ</h2>
 
-    <p id="resultName"></p>
+<div id="answerList"></div>
 
-    <div class="score" id="scoreText"></div>
+</div>
 
-    <p id="timeText"></p>
+</div>
 
-    <p id="saveStatus">
-      📤 กำลังส่งคะแนนให้ครู...
-    </p>
+<div class="controls">
 
-    <button onclick="location.reload()">
-      🔄 เล่นใหม่
-    </button>
+<button class="clear-btn" onclick="clearLines()">
+🗑️ ล้างเส้นทั้งหมด
+</button>
 
-  </div>
+<button class="submit-btn" onclick="submitGame()">
+📤 ส่งคำตอบ
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ผลลัพธ์ -->
+
+<div class="card result-page" id="resultPage">
+
+<h1>🎉 ทำเกมเสร็จแล้ว!</h1>
+
+<h2 id="resultName"></h2>
+
+<div class="score" id="scoreText"></div>
+
+<p id="timeText"></p>
+
+<p id="saveStatus">⏳ กำลังส่งคะแนนให้ครู...</p>
+
+<button class="primary-btn" onclick="location.reload()">
+🔄 เล่นใหม่
+</button>
+
+</div>
 
 </div>
 
 
 <script>
 
-  // ==========================================
-  // 🔗 GOOGLE APPS SCRIPT URL ของครู
-  // ==========================================
+// =====================================
+// 🔗 Google Sheets
+// =====================================
+
+const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbzn1YvetTuJpB8zmcdUhspvxBMR1JOBO-dsHHCDhfxMbbeIIZF-VEGQGpH6kCoW5pn4OA/exec";
+
+
+// =====================================
+// 🏛️ ข้อมูลเกม
+// =====================================
 
-  const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbzn1YvetTuJpB8zmcdUhspvxBMR1JOBO-dsHHCDhfxMbbeIIZF-VEGQGpH6kCoW5pn4OA/exec";
+const kingdoms = [
+"ทวารวดี",
+"ละโว้",
+"ลังกาสุกะ",
+"ศรีวิชัย",
+"ตามพรลิงค์",
+"โคตรบูรณ์",
+"หริภุญชัย"
+];
 
+const answers = [
+"พระธาตุพนม",
+"เมืองโบราณบ้านจาเละ",
+"ธรรมจักรศิลากับกวางหมอบ",
+"พระปรางค์สามยอด",
+"วัดจามเทวี",
+"พระบรมธาตุเจดีย์ จังหวัดนครศรีธรรมราช",
+"พระบรมธาตุไชยา",
+"จังหวัดลำพูน",
+"จังหวัดนครศรีธรรมราช",
+"จังหวัดนครพนม",
+"จังหวัดสุราษฎร์ธานี",
+"จังหวัดปัตตานี",
+"จังหวัดลพบุรี",
+"จังหวัดนครปฐม"
+];
 
-  // ==========================================
-  // 🏛️ ข้อมูลแคว้น
-  // ==========================================
+const correctAnswers = {
 
-  const kingdoms = [
-    "ทวารวดี",
-    "ละโว้",
-    "ลังกาสุกะ",
-    "ศรีวิชัย",
-    "ตามพรลิงค์",
-    "โคตรบูรณ์",
-    "หริภุญชัย"
-  ];
+"ทวารวดี": [
+"ธรรมจักรศิลากับกวางหมอบ",
+"จังหวัดนครปฐม"
+],
 
+"ละโว้": [
+"พระปรางค์สามยอด",
+"จังหวัดลพบุรี"
+],
 
-  // ==========================================
-  // 🧩 คำตอบทั้งหมด
-  // ==========================================
+"ลังกาสุกะ": [
+"เมืองโบราณบ้านจาเละ",
+"จังหวัดปัตตานี"
+],
 
-  const answers = [
-    "พระธาตุพนม",
-    "เมืองโบราณบ้านจาเละ",
-    "ธรรมจักรศิลากับกวางหมอบ",
-    "พระปรางค์สามยอด",
-    "วัดจามเทวี",
-    "พระบรมธาตุเจดีย์ จังหวัดนครศรีธรรมราช",
-    "พระบรมธาตุไชยา",
-    "จังหวัดลำพูน",
-    "จังหวัดนครศรีธรรมราช",
-    "จังหวัดนครพนม",
-    "จังหวัดสุราษฎร์ธานี",
-    "จังหวัดปัตตานี",
-    "จังหวัดลพบุรี",
-    "จังหวัดนครปฐม"
-  ];
+"ศรีวิชัย": [
+"พระบรมธาตุไชยา",
+"จังหวัดสุราษฎร์ธานี"
+],
 
+"ตามพรลิงค์": [
+"พระบรมธาตุเจดีย์ จังหวัดนครศรีธรรมราช",
+"จังหวัดนครศรีธรรมราช"
+],
 
-  // ==========================================
-  // ✅ คำตอบที่ถูกต้อง
-  // ==========================================
+"โคตรบูรณ์": [
+"พระธาตุพนม",
+"จังหวัดนครพนม"
+],
 
-  const correctAnswers = {
+"หริภุญชัย": [
+"วัดจามเทวี",
+"จังหวัดลำพูน"
+]
 
-    "ทวารวดี": [
-      "ธรรมจักรศิลากับกวางหมอบ",
-      "จังหวัดนครปฐม"
-    ],
+};
 
-    "ละโว้": [
-      "พระปรางค์สามยอด",
-      "จังหวัดลพบุรี"
-    ],
 
-    "ลังกาสุกะ": [
-      "เมืองโบราณบ้านจาเละ",
-      "จังหวัดปัตตานี"
-    ],
+// =====================================
+// 🎮 ตัวแปรเกม
+// =====================================
 
-    "ศรีวิชัย": [
-      "พระบรมธาตุไชยา",
-      "จังหวัดสุราษฎร์ธานี"
-    ],
+let connections = [];
+let startKingdom = null;
+let isDragging = false;
+let tempLine = null;
 
-    "ตามพรลิงค์": [
-      "พระบรมธาตุเจดีย์ จังหวัดนครศรีธรรมราช",
-      "จังหวัดนครศรีธรรมราช"
-    ],
+let seconds = 0;
+let timerInterval = null;
 
-    "โคตรบูรณ์": [
-      "พระธาตุพนม",
-      "จังหวัดนครพนม"
-    ],
 
-    "หริภุญชัย": [
-      "วัดจามเทวี",
-      "จังหวัดลำพูน"
-    ]
+// =====================================
+// 🔀 สุ่มคำตอบ
+// =====================================
 
-  };
+function shuffle(array) {
 
+const newArray = [...array];
 
-  // ==========================================
-  // 🎮 ตัวแปรเกม
-  // ==========================================
+for (let i = newArray.length - 1; i > 0; i--) {
 
-  let selectedKingdom = null;
+const j = Math.floor(Math.random() * (i + 1));
 
-  let studentAnswers = {};
+[newArray[i], newArray[j]] =
+[newArray[j], newArray[i]];
 
-  let seconds = 0;
+}
 
-  let timerInterval = null;
+return newArray;
 
+}
 
-  // ==========================================
-  // 🔀 สุ่มตำแหน่งคำตอบ
-  // ==========================================
 
-  function shuffle(array) {
+// =====================================
+// ▶️ เริ่มเกม
+// =====================================
 
-    let newArray = [...array];
+function startGame() {
 
-    for (let i = newArray.length - 1; i > 0; i--) {
+const name = document.getElementById("studentName").value.trim();
+const classroom = document.getElementById("studentClass").value.trim();
+const number = document.getElementById("studentNumber").value.trim();
 
-      let j = Math.floor(Math.random() * (i + 1));
+if (!name || !classroom || !number) {
 
-      [newArray[i], newArray[j]] =
-        [newArray[j], newArray[i]];
+alert("กรุณากรอกข้อมูลให้ครบ");
 
-    }
+return;
 
-    return newArray;
-  }
+}
 
+document.getElementById("startPage").style.display = "none";
+document.getElementById("gamePage").style.display = "block";
 
-  // ==========================================
-  // ▶️ เริ่มเกม
-  // ==========================================
+renderGame();
 
-  function startGame() {
+timerInterval = setInterval(() => {
 
-    const name =
-      document.getElementById("studentName").value.trim();
+seconds++;
+updateTimer();
 
-    const classroom =
-      document.getElementById("studentClass").value.trim();
+}, 1000);
 
-    const number =
-      document.getElementById("studentNumber").value.trim();
+}
 
 
-    if (!name || !classroom || !number) {
+// =====================================
+// 🖥️ สร้างเกม
+// =====================================
 
-      alert("⚠️ กรุณากรอกชื่อ ชั้น และเลขที่ให้ครบ");
+function renderGame() {
 
-      return;
-    }
+const kingdomList =
+document.getElementById("kingdomList");
 
+const answerList =
+document.getElementById("answerList");
 
-    document.getElementById("startPage").style.display = "none";
+kingdomList.innerHTML = "";
+answerList.innerHTML = "";
 
-    document.getElementById("gamePage").style.display = "block";
 
+kingdoms.forEach(kingdom => {
 
-    renderKingdoms();
+const item = document.createElement("div");
 
-    renderAnswers();
+item.className = "item";
 
+item.innerHTML =
+`🏛️ แคว้น${kingdom}
+<div class="connector left-dot"
+data-kingdom="${kingdom}"></div>`;
 
-    timerInterval = setInterval(() => {
+kingdomList.appendChild(item);
 
-      seconds++;
+});
 
-      updateTimer();
 
-    }, 1000);
+shuffle(answers).forEach(answer => {
 
-  }
+const item = document.createElement("div");
 
+item.className = "item answer-item";
 
-  // ==========================================
-  // ⏱️ อัปเดตเวลา
-  // ==========================================
+item.innerHTML =
+`<div class="connector right-dot"
+data-answer="${answer}"></div>
+${answer}`;
 
-  function updateTimer() {
+answerList.appendChild(item);
 
-    const minutes =
-      String(Math.floor(seconds / 60)).padStart(2, "0");
+});
 
-    const secs =
-      String(seconds % 60).padStart(2, "0");
 
-    document.getElementById("timer").textContent =
-      minutes + ":" + secs;
+setupConnectors();
 
-  }
+}
 
 
-  // ==========================================
-  // 🏛️ แสดงแคว้น
-  // ==========================================
+// =====================================
+// 🔗 ระบบโยงเส้น
+// =====================================
 
-  function renderKingdoms() {
+function setupConnectors() {
 
-    const list =
-      document.getElementById("kingdomList");
+const board =
+document.getElementById("gameBoard");
 
-    list.innerHTML = "";
+const svg =
+document.getElementById("svgLines");
 
 
-    kingdoms.forEach(kingdom => {
+document.querySelectorAll(".left-dot")
+.forEach(dot => {
 
-      const div =
-        document.createElement("div");
+dot.addEventListener("pointerdown", startConnection);
 
-      div.className = "kingdom";
+});
 
-      div.textContent =
-        "🏛️ แคว้น" + kingdom;
 
+document.querySelectorAll(".right-dot")
+.forEach(dot => {
 
-      if (
-        studentAnswers[kingdom] &&
-        studentAnswers[kingdom].length === 2
-      ) {
+dot.addEventListener("pointerup", endConnection);
 
-        div.classList.add("completed");
+});
 
-      }
 
+board.addEventListener("pointermove", moveConnection);
 
-      if (selectedKingdom === kingdom) {
+board.addEventListener("pointerup", cancelConnection);
 
-        div.classList.add("selected");
+board.addEventListener("pointerleave", cancelConnection);
 
-      }
+}
 
 
-      div.onclick = () => {
+function startConnection(event) {
 
-        selectedKingdom = kingdom;
+event.preventDefault();
 
-        renderKingdoms();
+startKingdom =
+event.target.dataset.kingdom;
 
-        renderAnswers();
+isDragging = true;
 
-        updateSelectedInfo();
 
-      };
+const svg =
+document.getElementById("svgLines");
 
+const line =
+document.createElementNS(
+"http://www.w3.org/2000/svg",
+"line"
+);
 
-      list.appendChild(div);
+line.classList.add("temp-line");
 
-    });
+svg.appendChild(line);
 
-  }
+tempLine = line;
 
+const point =
+getPoint(event.target);
 
-  // ==========================================
-  // 🧩 แสดงคำตอบ
-  // ==========================================
+line.setAttribute("x1", point.x);
+line.setAttribute("y1", point.y);
+line.setAttribute("x2", point.x);
+line.setAttribute("y2", point.y);
 
-  function renderAnswers() {
+event.target.setPointerCapture(event.pointerId);
 
-    const list =
-      document.getElementById("answerList");
+}
 
-    list.innerHTML = "";
 
+function moveConnection(event) {
 
-    const shuffledAnswers =
-      shuffle(answers);
+if (!isDragging || !tempLine) return;
 
+const board =
+document.getElementById("gameBoard");
 
-    shuffledAnswers.forEach(answer => {
+const rect =
+board.getBoundingClientRect();
 
-      const div =
-        document.createElement("div");
+const startDot =
+document.querySelector(
+`.left-dot[data-kingdom="${startKingdom}"]`
+);
 
-      div.className = "answer";
+const startPoint =
+getPoint(startDot);
 
-      div.textContent = answer;
 
+tempLine.setAttribute("x1", startPoint.x);
+tempLine.setAttribute("y1", startPoint.y);
 
-      // ตรวจว่าคำตอบนี้ถูกใช้กับแคว้นอื่นหรือไม่
+tempLine.setAttribute(
+"x2",
+event.clientX - rect.left
+);
 
-      let usedByOther = false;
+tempLine.setAttribute(
+"y2",
+event.clientY - rect.top
+);
 
+}
 
-      Object.keys(studentAnswers).forEach(kingdom => {
 
-        if (
-          kingdom !== selectedKingdom &&
-          studentAnswers[kingdom].includes(answer)
-        ) {
+function endConnection(event) {
 
-          usedByOther = true;
+if (!isDragging) return;
 
-        }
+event.preventDefault();
 
-      });
+const answer =
+event.target.dataset.answer;
 
 
-      if (usedByOther) {
+// ตรวจคำตอบนี้ถูกโยงแล้วหรือไม่
 
-        div.classList.add("used-by-other");
+if (
+connections.some(
+connection =>
+connection.answer === answer
+)
+) {
 
-      }
+cancelConnection();
 
+return;
 
-      // ตรวจว่าเป็นคำตอบที่เลือกในแคว้นปัจจุบัน
+}
 
-      if (
-        selectedKingdom &&
-        studentAnswers[selectedKingdom] &&
-        studentAnswers[selectedKingdom].includes(answer)
-      ) {
 
-        div.classList.add("selected-answer");
+// แคว้นโยงได้สูงสุด 2 เส้น
 
-      }
+const kingdomConnections =
+connections.filter(
+connection =>
+connection.kingdom === startKingdom
+);
 
 
-      div.onclick = () => {
+if (kingdomConnections.length >= 2) {
 
-        chooseAnswer(answer);
+alert("แคว้นนี้โยงครบ 2 คำตอบแล้ว");
 
-      };
+cancelConnection();
 
+return;
 
-      list.appendChild(div);
+}
 
-    });
 
-  }
+// บันทึกเส้น
 
+connections.push({
 
-  // ==========================================
-  // 🎯 เลือกคำตอบ
-  // ==========================================
+kingdom: startKingdom,
+answer: answer
 
-  function chooseAnswer(answer) {
+});
 
-    if (!selectedKingdom) {
 
-      alert("👈 กรุณาเลือกแคว้นก่อน");
+drawLines();
 
-      return;
+cancelConnection();
 
-    }
+updateProgress();
 
+}
 
-    if (!studentAnswers[selectedKingdom]) {
 
-      studentAnswers[selectedKingdom] = [];
+function cancelConnection() {
 
-    }
+if (tempLine) {
 
+tempLine.remove();
 
-    const currentAnswers =
-      studentAnswers[selectedKingdom];
+tempLine = null;
 
+}
 
-    // ถ้าเลือกอยู่แล้ว ให้ยกเลิก
+isDragging = false;
+startKingdom = null;
 
-    const index =
-      currentAnswers.indexOf(answer);
+}
 
 
-    if (index !== -1) {
+function getPoint(element) {
 
-      currentAnswers.splice(index, 1);
+const board =
+document.getElementById("gameBoard");
 
-    }
+const boardRect =
+board.getBoundingClientRect();
 
-    else {
+const rect =
+element.getBoundingClientRect();
 
-      // ถ้าเลือกครบ 2 ข้อแล้ว
+return {
 
-      if (currentAnswers.length >= 2) {
+x:
+rect.left -
+boardRect.left +
+rect.width / 2,
 
-        alert(
-          "⚠️ แคว้นนี้เลือกครบ 2 คำตอบแล้ว\n\nหากต้องการเปลี่ยน ให้กดคำตอบเดิมเพื่อยกเลิกก่อน"
-        );
+y:
+rect.top -
+boardRect.top +
+rect.height / 2
 
-        return;
+};
 
-      }
+}
 
 
-      currentAnswers.push(answer);
+// =====================================
+// ✏️ วาดเส้นทั้งหมด
+// =====================================
 
-    }
+function drawLines() {
 
+const svg =
+document.getElementById("svgLines");
 
-    renderKingdoms();
+svg.innerHTML = "";
 
-    renderAnswers();
 
-    updateProgress();
+connections.forEach(connection => {
 
-    updateSelectedInfo();
+const start =
+document.querySelector(
+`.left-dot[data-kingdom="${connection.kingdom}"]`
+);
 
-  }
+const end =
+document.querySelector(
+`.right-dot[data-answer="${connection.answer}"]`
+);
 
 
-  // ==========================================
-  // 📊 ความคืบหน้า
-  // ==========================================
+const startPoint =
+getPoint(start);
 
-  function updateProgress() {
+const endPoint =
+getPoint(end);
 
-    let total = 0;
 
+const line =
+document.createElementNS(
+"http://www.w3.org/2000/svg",
+"line"
+);
 
-    Object.values(studentAnswers).forEach(items => {
+line.setAttribute("x1", startPoint.x);
+line.setAttribute("y1", startPoint.y);
 
-      total += items.length;
+line.setAttribute("x2", endPoint.x);
+line.setAttribute("y2", endPoint.y);
 
-    });
+line.classList.add("line");
 
+svg.appendChild(line);
 
-    document.getElementById("progress").textContent =
-      total;
+});
 
-  }
+}
 
 
-  // ==========================================
-  // ℹ️ ข้อมูลแคว้นที่เลือก
-  // ==========================================
+// =====================================
+// 📊 อัปเดตจำนวน
+// =====================================
 
-  function updateSelectedInfo() {
+function updateProgress() {
 
-    const info =
-      document.getElementById("selectedInfo");
+document.getElementById("progress").textContent =
+connections.length;
 
+}
 
-    if (!selectedKingdom) {
 
-      info.textContent =
-        "👈 กรุณาเลือกแคว้นก่อน";
+// =====================================
+// 🗑️ ล้างเส้น
+// =====================================
 
-      return;
+function clearLines() {
 
-    }
+if (!confirm("ต้องการล้างเส้นทั้งหมดใช่หรือไม่?")) {
+return;
+}
 
+connections = [];
 
-    const selected =
-      studentAnswers[selectedKingdom] || [];
+drawLines();
 
+updateProgress();
 
-    info.textContent =
-      "🏛️ แคว้น" +
-      selectedKingdom +
-      " — เลือกแล้ว " +
-      selected.length +
-      " / 2 ข้อ";
+}
 
-  }
 
+// =====================================
+// ⏱️ เวลา
+// =====================================
 
-  // ==========================================
-  // 🏆 ส่งเกม
-  // ==========================================
+function updateTimer() {
 
-  function submitGame() {
+const min =
+String(Math.floor(seconds / 60))
+.padStart(2, "0");
 
-    // ตรวจว่าตอบครบหรือยัง
+const sec =
+String(seconds % 60)
+.padStart(2, "0");
 
-    let totalAnswers = 0;
+document.getElementById("timer").textContent =
+min + ":" + sec;
 
+}
 
-    Object.values(studentAnswers).forEach(items => {
 
-      totalAnswers += items.length;
+// =====================================
+// 🏆 ส่งคำตอบ
+// =====================================
 
-    });
+function submitGame() {
 
+if (connections.length !== 14) {
 
-    if (totalAnswers !== 14) {
+alert(
+"กรุณาโยงเส้นให้ครบ 14 เส้น\nตอนนี้โยงแล้ว " +
+connections.length +
+" เส้น"
+);
 
-      alert(
-        "⚠️ คุณตอบไปแล้ว " +
-        totalAnswers +
-        " / 14 ข้อ\n\nกรุณาจับคู่ให้ครบก่อนส่ง"
-      );
+return;
 
-      return;
+}
 
-    }
+clearInterval(timerInterval);
 
 
-    // ตรวจว่าแต่ละแคว้นมี 2 คำตอบ
+let score = 0;
 
-    for (const kingdom of kingdoms) {
 
-      if (
-        !studentAnswers[kingdom] ||
-        studentAnswers[kingdom].length !== 2
-      ) {
+connections.forEach(connection => {
 
-        alert(
-          "⚠️ กรุณาตรวจสอบแคว้น" +
-          kingdom +
-          " ให้เลือกคำตอบครบ 2 ข้อ"
-        );
+if (
+correctAnswers[connection.kingdom]
+.includes(connection.answer)
+) {
 
-        return;
+score++;
 
-      }
+}
 
-    }
+});
 
 
-    clearInterval(timerInterval);
+const min =
+String(Math.floor(seconds / 60))
+.padStart(2, "0");
 
+const sec =
+String(seconds % 60)
+.padStart(2, "0");
 
-    // คำนวณคะแนน
+const time =
+min + ":" + sec;
 
-    let score = 0;
 
+document.getElementById("gamePage").style.display =
+"none";
 
-    kingdoms.forEach(kingdom => {
+document.getElementById("resultPage").style.display =
+"block";
 
-      studentAnswers[kingdom].forEach(answer => {
 
-        if (
-          correctAnswers[kingdom].includes(answer)
-        ) {
+document.getElementById("resultName").textContent =
+"👤 " +
+document.getElementById("studentName").value;
 
-          score++;
 
-        }
+document.getElementById("scoreText").textContent =
+"🏆 คะแนน " +
+score +
+" / 14";
 
-      });
 
-    });
+document.getElementById("timeText").textContent =
+"⏱️ ใช้เวลา " +
+time;
 
 
-    const minutes =
-      String(Math.floor(seconds / 60)).padStart(2, "0");
+sendToGoogleSheet(score, time);
 
-    const secs =
-      String(seconds % 60).padStart(2, "0");
+}
 
-    const time =
-      minutes + ":" + secs;
 
+// =====================================
+// 📤 ส่ง Google Sheets
+// =====================================
 
-    // เปลี่ยนหน้า
+function sendToGoogleSheet(score, time) {
 
-    document.getElementById("gamePage").style.display =
-      "none";
+const data = {
 
-    document.getElementById("resultPage").style.display =
-      "block";
+name:
+document.getElementById("studentName").value,
 
+classroom:
+document.getElementById("studentClass").value,
 
-    document.getElementById("resultName").textContent =
-      "👤 " +
-      document.getElementById("studentName").value;
+number:
+document.getElementById("studentNumber").value,
 
+score:
+score + "/14",
 
-    document.getElementById("scoreText").textContent =
-      "🏆 " + score + " / 14 คะแนน";
+time:
+time
 
+};
 
-    document.getElementById("timeText").textContent =
-      "⏱️ ใช้เวลา " + time;
 
+fetch(GOOGLE_SCRIPT_URL, {
 
-    // ส่งคะแนนไป Google Sheets
+method: "POST",
 
-    sendToGoogleSheet(score, time);
+mode: "no-cors",
 
-  }
+headers: {
+"Content-Type": "text/plain"
+},
 
+body:
+JSON.stringify(data)
 
-  // ==========================================
-  // 📤 ส่งข้อมูลไป Google Sheets
-  // ==========================================
+})
 
-  function sendToGoogleSheet(score, time) {
+.then(() => {
 
-    const data = {
+document.getElementById("saveStatus").textContent =
+"✅ ส่งคะแนนให้ครูเรียบร้อยแล้ว";
 
-      name:
-        document.getElementById("studentName").value,
+})
 
-      classroom:
-        document.getElementById("studentClass").value,
+.catch(() => {
 
-      number:
-        document.getElementById("studentNumber").value,
+document.getElementById("saveStatus").textContent =
+"⚠️ ไม่สามารถยืนยันการส่งคะแนนได้";
 
-      score:
-        score + "/14",
+});
 
-      time:
-        time
+}
 
-    };
 
+// =====================================
+// 📱 วาดเส้นใหม่เมื่อหมุนหน้าจอ
+// =====================================
 
-    fetch(GOOGLE_SCRIPT_URL, {
+window.addEventListener("resize", () => {
 
-      method: "POST",
+drawLines();
 
-      mode: "no-cors",
-
-      headers: {
-        "Content-Type": "text/plain"
-      },
-
-      body: JSON.stringify(data)
-
-    })
-
-    .then(() => {
-
-      document.getElementById("saveStatus").textContent =
-        "✅ ส่งคะแนนให้ครูเรียบร้อยแล้ว";
-
-    })
-
-    .catch(() => {
-
-      document.getElementById("saveStatus").textContent =
-        "⚠️ ไม่สามารถยืนยันการส่งคะแนนได้";
-
-    });
-
-  }
+});
 
 </script>
 
