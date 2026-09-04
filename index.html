@@ -10,9 +10,9 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 <style>
 
-/* =========================================
-   🎨 ตั้งค่าพื้นฐาน
-========================================= */
+/* ===============================
+   🎨 พื้นฐาน
+================================ */
 
 * {
   box-sizing: border-box;
@@ -42,17 +42,12 @@ body {
   padding: 25px;
 }
 
-/* =========================================
-   📜 กล่องหลัก
-========================================= */
-
 .card {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,252,237,.97),
-      rgba(245,232,195,.97)
-    );
+  background: linear-gradient(
+    135deg,
+    rgba(255,252,237,.97),
+    rgba(245,232,195,.97)
+  );
 
   border: 3px solid #b8904b;
   border-radius: 28px;
@@ -63,9 +58,9 @@ body {
     inset 0 0 35px rgba(160,110,45,.12);
 }
 
-/* =========================================
+/* ===============================
    🏛️ หน้าเริ่มต้น
-========================================= */
+================================ */
 
 #startPage {
   max-width: 650px;
@@ -87,10 +82,6 @@ body {
   margin-bottom: 30px;
 }
 
-/* =========================================
-   ✍️ ช่องกรอกข้อมูล
-========================================= */
-
 input {
   width: 100%;
   padding: 16px 18px;
@@ -103,9 +94,9 @@ input {
   font-size: 18px;
 }
 
-/* =========================================
+/* ===============================
    🔘 ปุ่ม
-========================================= */
+================================ */
 
 button {
   border: none;
@@ -120,16 +111,13 @@ button {
 
 .primary-btn {
   width: 100%;
-
-  background:
-    linear-gradient(135deg, #7b4f27, #a87532);
-
+  background: linear-gradient(135deg, #7b4f27, #a87532);
   color: white;
 }
 
-/* =========================================
+/* ===============================
    🎮 หน้าเกม
-========================================= */
+================================ */
 
 .game-page,
 .result-page {
@@ -147,9 +135,23 @@ button {
   color: #68401d;
 }
 
-/* =========================================
+.part-badge {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 22px;
+
+  border-radius: 30px;
+
+  background: #7b4f27;
+  color: white;
+
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* ===============================
    📊 แถบข้อมูล
-========================================= */
+================================ */
 
 .top-bar {
   display: flex;
@@ -166,16 +168,15 @@ button {
   border-radius: 18px;
 
   background: #fff8df;
-
   border: 2px solid #d0ad64;
 
   font-size: 19px;
   font-weight: bold;
 }
 
-/* =========================================
+/* ===============================
    💡 คำแนะนำ
-========================================= */
+================================ */
 
 .instructions {
   text-align: center;
@@ -186,16 +187,15 @@ button {
   border-radius: 20px;
 
   background: #edf3e8;
-
   border: 2px solid #9cac91;
 
   font-size: 18px;
   line-height: 1.8;
 }
 
-/* =========================================
+/* ===============================
    🗺️ กระดานเกม
-========================================= */
+================================ */
 
 .game-board {
   position: relative;
@@ -208,15 +208,14 @@ button {
     minmax(250px, 1fr);
 
   width: 100%;
-
-  min-height: 1180px;
+  min-height: 900px;
 
   margin-top: 15px;
 }
 
-/* =========================================
-   ➖ SVG เส้น
-========================================= */
+/* ===============================
+   ➖ SVG
+================================ */
 
 #svgLines {
   position: absolute;
@@ -233,9 +232,9 @@ button {
   overflow: visible;
 }
 
-/* =========================================
+/* ===============================
    🏛️ คอลัมน์
-========================================= */
+================================ */
 
 .column {
   position: relative;
@@ -257,12 +256,12 @@ button {
   margin: 10px 0 30px;
 }
 
-/* =========================================
-   📋 ฝั่งซ้าย
-========================================= */
+/* ===============================
+   📋 รายการ
+================================ */
 
 #kingdomList {
-  height: 1060px;
+  height: 780px;
 
   display: flex;
   flex-direction: column;
@@ -270,32 +269,31 @@ button {
   justify-content: space-between;
 }
 
-/* =========================================
-   📋 ฝั่งขวา
-========================================= */
-
 #answerList {
+  height: 780px;
+
   display: flex;
   flex-direction: column;
-  gap: 14px;
+
+  justify-content: space-between;
 }
 
-/* =========================================
+/* ===============================
    🏛️ กล่องแคว้น
-========================================= */
+================================ */
 
 .item {
   position: relative;
 
-  min-height: 92px;
+  min-height: 80px;
 
   display: flex;
   align-items: center;
 
   padding:
-    20px
+    18px
     60px
-    20px
+    18px
     25px;
 
   border-radius: 20px;
@@ -303,12 +301,11 @@ button {
   font-size: 20px;
   font-weight: bold;
 
-  background:
-    linear-gradient(
-      135deg,
-      #c8d5dc,
-      #e4edf0
-    );
+  background: linear-gradient(
+    135deg,
+    #c8d5dc,
+    #e4edf0
+  );
 
   border: 2px solid #9aabb1;
 
@@ -318,13 +315,11 @@ button {
     0 7px 15px rgba(40,55,60,.18);
 }
 
-/* =========================================
+/* ===============================
    🏺 กล่องคำตอบ
-========================================= */
+================================ */
 
 .answer-item {
-  min-height: 65px;
-
   padding:
     15px
     25px
@@ -333,24 +328,20 @@ button {
 
   font-size: 17px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #f7dfa0,
-      #fff6d8
-    );
+  background: linear-gradient(
+    135deg,
+    #f7dfa0,
+    #fff6d8
+  );
 
   border-color: #d1aa4e;
 
   color: #65431d;
 }
 
-/* =========================================
+/* ===============================
    🔵 🟡 จุดโยง
-
-   สำคัญ:
-   pan-y = อนุญาตให้เลื่อนขึ้นลง
-========================================= */
+================================ */
 
 .connector {
   position: absolute;
@@ -365,52 +356,47 @@ button {
 
   border: 5px solid #fffdf3;
 
-  box-shadow:
-    0 4px 10px rgba(0,0,0,.3);
+  box-shadow: 0 4px 10px rgba(0,0,0,.3);
 
   z-index: 30;
 
   cursor: crosshair;
 
-  /* 📱 อนุญาตให้เลื่อนแนวตั้ง */
   touch-action: pan-y;
 }
 
 .left-dot {
   right: -20px;
 
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #70b5df,
-      #17618f
-    );
+  background: radial-gradient(
+    circle at 35% 30%,
+    #70b5df,
+    #17618f
+  );
 }
 
 .right-dot {
   left: -20px;
 
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #ffd85d,
-      #c58300
-    );
+  background: radial-gradient(
+    circle at 35% 30%,
+    #ffd85d,
+    #c58300
+  );
 }
 
-/* =========================================
-   ➖ เส้นคำตอบ
-========================================= */
+/* ===============================
+   ➖ เส้น
+================================ */
 
 .line {
   stroke: #b8482f;
   stroke-width: 7;
   stroke-linecap: round;
 
-  filter:
-    drop-shadow(
-      0 3px 2px rgba(60,20,10,.25)
-    );
+  filter: drop-shadow(
+    0 3px 2px rgba(60,20,10,.25)
+  );
 }
 
 .temp-line {
@@ -424,19 +410,15 @@ button {
   opacity: .85;
 }
 
-/* =========================================
-   🎯 โยงแล้ว
-========================================= */
-
 .item.connected {
   box-shadow:
     0 0 0 4px rgba(86,138,84,.28),
     0 7px 15px rgba(40,55,60,.18);
 }
 
-/* =========================================
+/* ===============================
    🎮 ปุ่มควบคุม
-========================================= */
+================================ */
 
 .controls {
   display: flex;
@@ -458,14 +440,15 @@ button {
   color: white;
 }
 
+.next-btn,
 .submit-btn {
   background: #79a567;
   color: white;
 }
 
-/* =========================================
+/* ===============================
    🏆 ผลคะแนน
-========================================= */
+================================ */
 
 .result-page {
   max-width: 700px;
@@ -485,14 +468,13 @@ button {
   line-height: 1.8;
 }
 
-/* =========================================
-   💻 จอกลาง
-========================================= */
+/* ===============================
+   📱 Responsive
+================================ */
 
 @media (max-width: 1400px) {
 
   .game-board {
-
     grid-template-columns:
       minmax(220px, 1fr)
       400px
@@ -500,51 +482,6 @@ button {
   }
 
 }
-
-/* =========================================
-   📱 Tablet
-========================================= */
-
-@media (max-width: 1100px) {
-
-  .container {
-    padding: 12px;
-  }
-
-  .card {
-    padding: 18px;
-  }
-
-  .game-board {
-
-    grid-template-columns:
-      minmax(180px, 1fr)
-      300px
-      minmax(180px, 1fr);
-
-    min-height: 1120px;
-  }
-
-  #kingdomList {
-    height: 1010px;
-  }
-
-  .item {
-    font-size: 17px;
-    min-height: 85px;
-    padding-left: 15px;
-  }
-
-  .answer-item {
-    font-size: 15px;
-    min-height: 62px;
-  }
-
-}
-
-/* =========================================
-   📱 มือถือ
-========================================= */
 
 @media (max-width: 700px) {
 
@@ -584,49 +521,40 @@ button {
       16%
       42%;
 
-    min-height: 1080px;
+    min-height: 760px;
   }
 
-  #kingdomList {
-    height: 1000px;
+  #kingdomList,
+  #answerList {
+    height: 680px;
   }
 
   .column h2 {
-    font-size: 18px;
+    font-size: 17px;
     margin-bottom: 20px;
   }
 
   .item {
 
-    min-height: 75px;
-
-    font-size: 13px;
-
-    padding:
-      10px
-      28px
-      10px
-      7px;
-  }
-
-  .answer-item {
-
-    min-height: 57px;
+    min-height: 65px;
 
     font-size: 12px;
 
     padding:
       8px
-      7px
+      28px
       8px
-      28px;
+      7px;
+  }
+
+  .answer-item {
+    font-size: 11px;
+    padding-left: 28px;
   }
 
   .connector {
-
     width: 34px;
     height: 34px;
-
     border-width: 4px;
   }
 
@@ -648,10 +576,6 @@ button {
 
 }
 
-/* =========================================
-   ✨ ขณะลากเส้น
-========================================= */
-
 body.dragging {
   user-select: none;
   -webkit-user-select: none;
@@ -660,13 +584,15 @@ body.dragging {
 </style>
 </head>
 
+
 <body>
 
 <div class="container">
 
-<!-- =====================================
-     🏛️ หน้าเริ่มต้น
-===================================== -->
+
+<!-- ===============================
+     🏁 หน้าเริ่มต้น
+================================ -->
 
 <div class="card" id="startPage">
 
@@ -675,8 +601,8 @@ body.dragging {
 </h1>
 
 <p class="subtitle">
-📜 ศึกษาแคว้นโบราณในดินแดนไทย<br>
-แล้วโยงเส้นจับคู่หลักฐานและสถานที่ให้ถูกต้อง
+📚 เรียนรู้แคว้นโบราณในดินแดนไทย<br>
+🎯 ทำทั้งหมด 2 พาร์ท
 </p>
 
 <input
@@ -695,16 +621,16 @@ placeholder="🔢 เลขที่">
 class="primary-btn"
 onclick="startGame()">
 
-🏺 เริ่มเกม
+🚀 เริ่มเกม
 
 </button>
 
 </div>
 
 
-<!-- =====================================
+<!-- ===============================
      🎮 หน้าเกม
-===================================== -->
+================================ -->
 
 <div class="card game-page" id="gamePage">
 
@@ -713,6 +639,11 @@ onclick="startGame()">
 <h1 class="game-title">
 🏛️ เกมโยงเส้นจับคู่แคว้นโบราณ
 </h1>
+
+<div
+class="part-badge"
+id="partTitle">
+</div>
 
 </div>
 
@@ -725,35 +656,18 @@ onclick="startGame()">
 </div>
 
 <div class="info-box">
-🔗 โยงแล้ว:
-<span id="progress">0</span> / 14
+🔗 พาร์ทนี้:
+<span id="progress">0</span> / 7
 </div>
 
 </div>
 
 
-<div class="instructions">
-
-🔵 <b>แตะค้างที่จุดสีน้ำเงิน</b>
-
-<br>
-
-ลากนิ้วไปยัง 🟡 <b>คำตอบที่ถูกต้อง</b>
-
-<br>
-
-📱 หากคำตอบอยู่ด้านล่าง
-<b>ลากนิ้วไปใกล้ขอบล่างของจอ</b>
-หน้าจอจะเลื่อนลงอัตโนมัติ
-
-<br>
-
-💡 แคว้นละ <b>2 คำตอบ</b>
-
+<div
+class="instructions"
+id="instructions">
 </div>
 
-
-<!-- 🗺️ กระดาน -->
 
 <div
 class="game-board"
@@ -777,7 +691,9 @@ id="gameBoard">
 
 <div class="column right-column">
 
-<h2>🧩 หลักฐาน / สถานที่</h2>
+<h2 id="rightTitle">
+🧩 คำตอบ
+</h2>
 
 <div id="answerList"></div>
 
@@ -785,8 +701,6 @@ id="gameBoard">
 
 </div>
 
-
-<!-- 🎮 ปุ่ม -->
 
 <div class="controls">
 
@@ -809,10 +723,11 @@ onclick="clearLines()">
 
 
 <button
-class="submit-btn"
-onclick="submitGame()">
+class="next-btn"
+id="nextButton"
+onclick="nextPart()">
 
-🏆 ตรวจคำตอบและส่งคะแนน
+➡️ ไปพาร์ทที่ 2
 
 </button>
 
@@ -821,9 +736,9 @@ onclick="submitGame()">
 </div>
 
 
-<!-- =====================================
-     🏆 หน้าผลคะแนน
-===================================== -->
+<!-- ===============================
+     🏆 ผลคะแนน
+================================ -->
 
 <div
 class="card result-page"
@@ -836,6 +751,11 @@ id="resultPage">
 <div
 class="score"
 id="scoreText">
+</div>
+
+<div
+class="result-info"
+id="partScoreText">
 </div>
 
 <div
@@ -863,22 +783,23 @@ onclick="location.reload()">
 
 </div>
 
+
 </div>
 
 
 <script>
 
-/* =========================================
+/* ===============================
    📊 Google Sheets
-========================================= */
+================================ */
 
 const GOOGLE_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbzn1YvetTuJpB8zmcdUhspvxBMR1JOBO-dsHHCDhfxMbbeIIZF-VEGQGpH6kCoW5pn4OA/exec";
 
 
-/* =========================================
-   🏛️ แคว้น
-========================================= */
+/* ===============================
+   🏛️ ข้อมูลแคว้น
+================================ */
 
 const kingdoms = [
 
@@ -893,79 +814,122 @@ const kingdoms = [
 ];
 
 
-/* =========================================
-   🧩 ตัวเลือก
-========================================= */
+/* ===============================
+   🏛️ PART 1
+   สถานที่สำคัญ
+================================ */
 
-const answers = [
+const part1 = {
 
-"พระธาตุพนม",
-"เมืองโบราณบ้านจาเละ",
+title:
+"🏛️ พาร์ทที่ 1 : จับคู่แคว้นกับสถานที่สำคัญ",
+
+rightTitle:
+"📍 สถานที่สำคัญ",
+
+answers: [
+
 "ธรรมจักรศิลากับกวางหมอบ",
 "พระปรางค์สามยอด",
-"วัดจามเทวี",
-"พระบรมธาตุเจดีย์ จังหวัดนครศรีธรรมราช",
-"พระบรมธาตุไชยา",
-"จังหวัดลำพูน",
-"จังหวัดนครศรีธรรมราช",
-"จังหวัดนครพนม",
-"จังหวัดสุราษฎร์ธานี",
-"จังหวัดปัตตานี",
-"จังหวัดลพบุรี",
-"จังหวัดนครปฐม"
-
-];
-
-
-/* =========================================
-   ✅ เฉลย
-========================================= */
-
-const correctAnswers = {
-
-"ทวารวดี": [
-"ธรรมจักรศิลากับกวางหมอบ",
-"จังหวัดนครปฐม"
-],
-
-"ละโว้": [
-"พระปรางค์สามยอด",
-"จังหวัดลพบุรี"
-],
-
-"ลังกาสุกะ": [
 "เมืองโบราณบ้านจาเละ",
-"จังหวัดปัตตานี"
-],
-
-"ศรีวิชัย": [
 "พระบรมธาตุไชยา",
-"จังหวัดสุราษฎร์ธานี"
-],
-
-"ตามพรลิงค์": [
 "พระบรมธาตุเจดีย์ จังหวัดนครศรีธรรมราช",
-"จังหวัดนครศรีธรรมราช"
-],
-
-"โคตรบูรณ์": [
 "พระธาตุพนม",
-"จังหวัดนครพนม"
+"วัดจามเทวี"
+
 ],
 
-"หริภุญชัย": [
-"วัดจามเทวี",
-"จังหวัดลำพูน"
-]
+correct: {
+
+"ทวารวดี":
+"ธรรมจักรศิลากับกวางหมอบ",
+
+"ละโว้":
+"พระปรางค์สามยอด",
+
+"ลังกาสุกะ":
+"เมืองโบราณบ้านจาเละ",
+
+"ศรีวิชัย":
+"พระบรมธาตุไชยา",
+
+"ตามพรลิงค์":
+"พระบรมธาตุเจดีย์ จังหวัดนครศรีธรรมราช",
+
+"โคตรบูรณ์":
+"พระธาตุพนม",
+
+"หริภุญชัย":
+"วัดจามเทวี"
+
+}
 
 };
 
 
-/* =========================================
+/* ===============================
+   📍 PART 2
+   ศูนย์กลางอาณาจักร
+================================ */
+
+const part2 = {
+
+title:
+"📍 พาร์ทที่ 2 : จับคู่แคว้นกับศูนย์กลางอาณาจักร",
+
+rightTitle:
+"🗺️ ศูนย์กลางอาณาจักร",
+
+answers: [
+
+"จังหวัดนครปฐม",
+"จังหวัดลพบุรี",
+"จังหวัดปัตตานี",
+"จังหวัดสุราษฎร์ธานี",
+"จังหวัดนครศรีธรรมราช",
+"จังหวัดนครพนม",
+"จังหวัดลำพูน"
+
+],
+
+correct: {
+
+"ทวารวดี":
+"จังหวัดนครปฐม",
+
+"ละโว้":
+"จังหวัดลพบุรี",
+
+"ลังกาสุกะ":
+"จังหวัดปัตตานี",
+
+"ศรีวิชัย":
+"จังหวัดสุราษฎร์ธานี",
+
+"ตามพรลิงค์":
+"จังหวัดนครศรีธรรมราช",
+
+"โคตรบูรณ์":
+"จังหวัดนครพนม",
+
+"หริภุญชัย":
+"จังหวัดลำพูน"
+
+}
+
+};
+
+
+/* ===============================
    🎮 ตัวแปรเกม
-========================================= */
+================================ */
+
+let currentPart = 1;
 
 let connections = [];
+
+let part1Connections = [];
+let part2Connections = [];
 
 let startKingdom = null;
 
@@ -979,23 +943,16 @@ let seconds = 0;
 
 let timerInterval = null;
 
-
-/* =========================================
-   📱 AUTO SCROLL
-========================================= */
-
 let lastPointerX = 0;
-
 let lastPointerY = 0;
 
 let autoScrollAnimation = null;
-
 let autoScrollDirection = 0;
 
 
-/* =========================================
+/* ===============================
    🔀 สุ่มคำตอบ
-========================================= */
+================================ */
 
 function shuffle(array) {
 
@@ -1008,106 +965,155 @@ function shuffle(array) {
   ) {
 
     const j =
-      Math.floor(
-        Math.random() * (i + 1)
-      );
+      Math.floor(Math.random() * (i + 1));
 
-    [
-      newArray[i],
-      newArray[j]
-    ] =
-    [
-      newArray[j],
-      newArray[i]
-    ];
+    [newArray[i], newArray[j]] =
+    [newArray[j], newArray[i]];
 
   }
 
   return newArray;
+
 }
 
 
-/* =========================================
+/* ===============================
    ▶️ เริ่มเกม
-========================================= */
+================================ */
 
 function startGame() {
 
   const name =
-    document
-    .getElementById("studentName")
-    .value
-    .trim();
+    document.getElementById("studentName")
+    .value.trim();
 
   const classroom =
-    document
-    .getElementById("studentClass")
-    .value
-    .trim();
+    document.getElementById("studentClass")
+    .value.trim();
 
   const number =
-    document
-    .getElementById("studentNumber")
-    .value
-    .trim();
+    document.getElementById("studentNumber")
+    .value.trim();
 
 
-  if (
-    !name ||
-    !classroom ||
-    !number
-  ) {
+  if (!name || !classroom || !number) {
 
     alert(
       "⚠️ กรุณากรอกชื่อ ชั้น และเลขที่ให้ครบ"
     );
 
     return;
+
   }
 
 
-  document
-  .getElementById("startPage")
-  .style.display = "none";
+  document.getElementById("startPage")
+    .style.display = "none";
+
+  document.getElementById("gamePage")
+    .style.display = "block";
 
 
-  document
-  .getElementById("gamePage")
-  .style.display = "block";
+  loadPart(1);
 
 
-  renderGame();
+  timerInterval = setInterval(() => {
 
+    seconds++;
+    updateTimer();
 
-  timerInterval =
-    setInterval(() => {
-
-      seconds++;
-
-      updateTimer();
-
-    }, 1000);
+  }, 1000);
 
 }
 
 
-/* =========================================
-   🏗️ สร้างเกม
-========================================= */
+/* ===============================
+   📖 โหลดพาร์ท
+================================ */
 
-function renderGame() {
+function loadPart(partNumber) {
+
+  currentPart = partNumber;
+
+  connections = [];
+
+
+  const data =
+    currentPart === 1
+    ? part1
+    : part2;
+
+
+  document.getElementById("partTitle")
+    .textContent = data.title;
+
+
+  document.getElementById("rightTitle")
+    .textContent = data.rightTitle;
+
+
+  document.getElementById("instructions")
+    .innerHTML =
+
+    currentPart === 1
+
+    ?
+
+    `
+    🔵 ลากจาก <b>แคว้น</b>
+    ไปยัง 🟡 <b>สถานที่สำคัญ</b> ที่ถูกต้อง<br>
+    ✨ ทำให้ครบทั้ง 7 ข้อ แล้วไปต่อพาร์ทที่ 2
+    `
+
+    :
+
+    `
+    🔵 ลากจาก <b>แคว้น</b>
+    ไปยัง 🟡 <b>ศูนย์กลางอาณาจักร</b> ที่ถูกต้อง<br>
+    🏆 ทำครบทั้ง 7 ข้อ แล้วตรวจคำตอบและส่งคะแนน
+    `;
+
+
+  document.getElementById("progress")
+    .textContent = "0";
+
+
+  document.getElementById("nextButton")
+    .textContent =
+
+    currentPart === 1
+
+    ? "➡️ ไปพาร์ทที่ 2"
+
+    : "🏆 ตรวจคำตอบและส่งคะแนน";
+
+
+  renderGame(data);
+
+  window.scrollTo(0, 0);
+
+}
+
+
+/* ===============================
+   🏗️ สร้างเกม
+================================ */
+
+function renderGame(data) {
 
   const kingdomList =
     document.getElementById("kingdomList");
 
-
   const answerList =
     document.getElementById("answerList");
 
+  const svg =
+    document.getElementById("svgLines");
+
 
   kingdomList.innerHTML = "";
-
   answerList.innerHTML = "";
+  svg.innerHTML = "";
 
 
   /* ฝั่งซ้าย */
@@ -1117,25 +1123,21 @@ function renderGame() {
     const item =
       document.createElement("div");
 
-
     item.className = "item";
-
 
     item.dataset.kingdomItem =
       kingdom;
-
 
     item.innerHTML = `
 
       🏛️ แคว้น${kingdom}
 
       <div
-      class="connector left-dot"
-      data-kingdom="${kingdom}">
+        class="connector left-dot"
+        data-kingdom="${kingdom}">
       </div>
 
     `;
-
 
     kingdomList.appendChild(item);
 
@@ -1145,7 +1147,7 @@ function renderGame() {
   /* ฝั่งขวา */
 
   const shuffledAnswers =
-    shuffle(answers);
+    shuffle(data.answers);
 
 
   shuffledAnswers.forEach(answer => {
@@ -1153,26 +1155,22 @@ function renderGame() {
     const item =
       document.createElement("div");
 
-
     item.className =
       "item answer-item";
-
 
     item.dataset.answerItem =
       answer;
 
-
     item.innerHTML = `
 
       <div
-      class="connector right-dot"
-      data-answer="${answer}">
+        class="connector right-dot"
+        data-answer="${answer}">
       </div>
 
       ${answer}
 
     `;
-
 
     answerList.appendChild(item);
 
@@ -1184,9 +1182,9 @@ function renderGame() {
 }
 
 
-/* =========================================
-   🔗 ตั้งค่าจุดโยง
-========================================= */
+/* ===============================
+   🔗 จุดโยง
+================================ */
 
 function setupConnectors() {
 
@@ -1204,9 +1202,9 @@ function setupConnectors() {
 }
 
 
-/* =========================================
-   🔵 เริ่มลากเส้น
-========================================= */
+/* ===============================
+   🔵 เริ่มลาก
+================================ */
 
 function startConnection(event) {
 
@@ -1216,8 +1214,6 @@ function startConnection(event) {
   ) return;
 
 
-  /* ป้องกันเมาส์เลือกข้อความ */
-
   event.preventDefault();
 
 
@@ -1225,37 +1221,34 @@ function startConnection(event) {
     event.currentTarget.dataset.kingdom;
 
 
-  /* ตรวจว่าแคว้นโยงครบหรือยัง */
+  /* ห้ามโยงแคว้นเดิมซ้ำ */
 
-  const kingdomCount =
-    connections.filter(
-      c =>
-      c.kingdom === startKingdom
-    ).length;
+  const alreadyConnected =
+    connections.some(
+      c => c.kingdom === startKingdom
+    );
 
 
-  if (kingdomCount >= 2) {
+  if (alreadyConnected) {
 
     alert(
-      "🏛️ แคว้นนี้โยงครบ 2 คำตอบแล้ว"
+      "⚠️ แคว้นนี้ถูกโยงแล้ว"
     );
 
     startKingdom = null;
 
     return;
+
   }
 
 
   isDragging = true;
 
-
   activePointerId =
     event.pointerId;
 
-
   lastPointerX =
     event.clientX;
-
 
   lastPointerY =
     event.clientY;
@@ -1285,9 +1278,7 @@ function startConnection(event) {
 
 
   const point =
-    getPoint(
-      event.currentTarget
-    );
+    getPoint(event.currentTarget);
 
 
   tempLine.setAttribute(
@@ -1316,9 +1307,9 @@ function startConnection(event) {
 }
 
 
-/* =========================================
-   🖐️ ลากเส้น
-========================================= */
+/* ===============================
+   🖐️ ขณะลาก
+================================ */
 
 document.addEventListener(
   "pointermove",
@@ -1339,7 +1330,6 @@ function moveConnection(event) {
   lastPointerX =
     event.clientX;
 
-
   lastPointerY =
     event.clientY;
 
@@ -1351,9 +1341,9 @@ function moveConnection(event) {
 }
 
 
-/* =========================================
+/* ===============================
    ➖ อัปเดตเส้น
-========================================= */
+================================ */
 
 function updateTempLine() {
 
@@ -1362,7 +1352,6 @@ function updateTempLine() {
 
   const board =
     document.getElementById("gameBoard");
-
 
   const boardRect =
     board.getBoundingClientRect();
@@ -1386,18 +1375,15 @@ function updateTempLine() {
     startPoint.x
   );
 
-
   tempLine.setAttribute(
     "y1",
     startPoint.y
   );
 
-
   tempLine.setAttribute(
     "x2",
     lastPointerX - boardRect.left
   );
-
 
   tempLine.setAttribute(
     "y2",
@@ -1407,9 +1393,9 @@ function updateTempLine() {
 }
 
 
-/* =========================================
-   📱 ตรวจขอบจอ
-========================================= */
+/* ===============================
+   📱 AUTO SCROLL
+================================ */
 
 function updateAutoScrollDirection() {
 
@@ -1442,10 +1428,6 @@ function updateAutoScrollDirection() {
 }
 
 
-/* =========================================
-   📜 AUTO SCROLL
-========================================= */
-
 function startAutoScroll() {
 
   if (autoScrollAnimation) return;
@@ -1462,55 +1444,35 @@ function startAutoScroll() {
     }
 
 
-    if (
-      autoScrollDirection !== 0
-    ) {
-
-      const before =
-        window.scrollY;
-
-
-      const speed = 10;
-
+    if (autoScrollDirection !== 0) {
 
       window.scrollBy(
         0,
-        speed *
-        autoScrollDirection
+        10 * autoScrollDirection
       );
 
-
-      /* หลังเลื่อน
-         คำนวณเส้นใหม่ */
-
       requestAnimationFrame(() => {
-
         updateTempLine();
-
       });
 
     }
 
 
     autoScrollAnimation =
-      requestAnimationFrame(
-        scrollLoop
-      );
+      requestAnimationFrame(scrollLoop);
 
   }
 
 
   autoScrollAnimation =
-    requestAnimationFrame(
-      scrollLoop
-    );
+    requestAnimationFrame(scrollLoop);
 
 }
 
 
-/* =========================================
+/* ===============================
    🟡 ปล่อยนิ้ว
-========================================= */
+================================ */
 
 document.addEventListener(
   "pointerup",
@@ -1526,8 +1488,6 @@ function finishConnection(event) {
     event.pointerId !== activePointerId
   ) return;
 
-
-  /* หยุด Auto Scroll */
 
   autoScrollDirection = 0;
 
@@ -1546,9 +1506,7 @@ function finishConnection(event) {
 
     if (
       element.classList &&
-      element.classList.contains(
-        "right-dot"
-      )
+      element.classList.contains("right-dot")
     ) {
 
       answerDot = element;
@@ -1558,17 +1516,13 @@ function finishConnection(event) {
     else {
 
       const answerItem =
-        element.closest(
-          ".answer-item"
-        );
+        element.closest(".answer-item");
 
 
       if (answerItem) {
 
         answerDot =
-          answerItem.querySelector(
-            ".right-dot"
-          );
+          answerItem.querySelector(".right-dot");
 
       }
 
@@ -1576,8 +1530,6 @@ function finishConnection(event) {
 
   }
 
-
-  /* ไม่โดนคำตอบ */
 
   if (!answerDot) {
 
@@ -1592,12 +1544,9 @@ function finishConnection(event) {
     answerDot.dataset.answer;
 
 
-  /* ตรวจคำตอบซ้ำ */
-
   const alreadyUsed =
     connections.some(
-      c =>
-      c.answer === answer
+      c => c.answer === answer
     );
 
 
@@ -1614,15 +1563,10 @@ function finishConnection(event) {
   }
 
 
-  /* เพิ่มการเชื่อม */
-
   connections.push({
 
-    kingdom:
-      startKingdom,
-
-    answer:
-      answer
+    kingdom: startKingdom,
+    answer: answer
 
   });
 
@@ -1638,9 +1582,9 @@ function finishConnection(event) {
 }
 
 
-/* =========================================
+/* ===============================
    ❌ ยกเลิก
-========================================= */
+================================ */
 
 document.addEventListener(
   "pointercancel",
@@ -1653,7 +1597,6 @@ function cancelConnection() {
   if (tempLine) {
 
     tempLine.remove();
-
     tempLine = null;
 
   }
@@ -1675,19 +1618,17 @@ function cancelConnection() {
 }
 
 
-/* =========================================
-   📍 หาตำแหน่งจุด
-========================================= */
+/* ===============================
+   📍 หาตำแหน่ง
+================================ */
 
 function getPoint(element) {
 
   const board =
     document.getElementById("gameBoard");
 
-
   const boardRect =
     board.getBoundingClientRect();
-
 
   const rect =
     element.getBoundingClientRect();
@@ -1696,14 +1637,11 @@ function getPoint(element) {
   return {
 
     x:
-
       rect.left -
       boardRect.left +
       rect.width / 2,
 
-
     y:
-
       rect.top -
       boardRect.top +
       rect.height / 2
@@ -1713,9 +1651,9 @@ function getPoint(element) {
 }
 
 
-/* =========================================
-   ✏️ วาดเส้นจริง
-========================================= */
+/* ===============================
+   ✏️ วาดเส้น
+================================ */
 
 function drawLines() {
 
@@ -1726,82 +1664,74 @@ function drawLines() {
   svg.innerHTML = "";
 
 
-  connections.forEach(
-    connection => {
+  connections.forEach(connection => {
 
-
-      const startDot =
-        document.querySelector(
-          `.left-dot[data-kingdom="${connection.kingdom}"]`
-        );
-
-
-      const endDot =
-        document.querySelector(
-          `.right-dot[data-answer="${connection.answer}"]`
-        );
-
-
-      if (
-        !startDot ||
-        !endDot
-      ) return;
-
-
-      const startPoint =
-        getPoint(startDot);
-
-
-      const endPoint =
-        getPoint(endDot);
-
-
-      const line =
-        document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "line"
-        );
-
-
-      line.setAttribute(
-        "x1",
-        startPoint.x
-      );
-
-      line.setAttribute(
-        "y1",
-        startPoint.y
-      );
-
-      line.setAttribute(
-        "x2",
-        endPoint.x
-      );
-
-      line.setAttribute(
-        "y2",
-        endPoint.y
+    const startDot =
+      document.querySelector(
+        `.left-dot[data-kingdom="${connection.kingdom}"]`
       );
 
 
-      line.setAttribute(
-        "class",
+    const endDot =
+      document.querySelector(
+        `.right-dot[data-answer="${connection.answer}"]`
+      );
+
+
+    if (!startDot || !endDot) return;
+
+
+    const startPoint =
+      getPoint(startDot);
+
+    const endPoint =
+      getPoint(endDot);
+
+
+    const line =
+      document.createElementNS(
+        "http://www.w3.org/2000/svg",
         "line"
       );
 
 
-      svg.appendChild(line);
+    line.setAttribute(
+      "x1",
+      startPoint.x
+    );
 
-    }
+    line.setAttribute(
+      "y1",
+      startPoint.y
+    );
 
-  );
+    line.setAttribute(
+      "x2",
+      endPoint.x
+    );
+
+    line.setAttribute(
+      "y2",
+      endPoint.y
+    );
+
+
+    line.setAttribute(
+      "class",
+      "line"
+    );
+
+
+    svg.appendChild(line);
+
+  });
 
 }
 
 
-/* =========================================
-   🎯 สถานะกล่อง
-========================================= */
+/* ===============================
+   🎯 สถานะ
+================================ */
 
 function updateConnectedStatus() {
 
@@ -1809,56 +1739,46 @@ function updateConnectedStatus() {
   .querySelectorAll(".item")
   .forEach(item => {
 
-    item.classList.remove(
-      "connected"
-    );
+    item.classList.remove("connected");
 
   });
 
 
-  connections.forEach(
-    connection => {
+  connections.forEach(connection => {
+
+    const kingdomItem =
+      document.querySelector(
+        `[data-kingdom-item="${connection.kingdom}"]`
+      );
 
 
-      const kingdomItem =
-        document.querySelector(
-          `[data-kingdom-item="${connection.kingdom}"]`
-        );
+    const answerItem =
+      document.querySelector(
+        `[data-answer-item="${connection.answer}"]`
+      );
 
 
-      const answerItem =
-        document.querySelector(
-          `[data-answer-item="${connection.answer}"]`
-        );
+    if (kingdomItem) {
 
-
-      if (kingdomItem) {
-
-        kingdomItem.classList.add(
-          "connected"
-        );
-
-      }
-
-
-      if (answerItem) {
-
-        answerItem.classList.add(
-          "connected"
-        );
-
-      }
+      kingdomItem.classList.add("connected");
 
     }
 
-  );
+
+    if (answerItem) {
+
+      answerItem.classList.add("connected");
+
+    }
+
+  });
 
 }
 
 
-/* =========================================
-   📊 อัปเดตจำนวน
-========================================= */
+/* ===============================
+   📊 ความคืบหน้า
+================================ */
 
 function updateProgress() {
 
@@ -1870,19 +1790,15 @@ function updateProgress() {
 }
 
 
-/* =========================================
+/* ===============================
    ↩️ ย้อนกลับ
-========================================= */
+================================ */
 
 function undoLast() {
 
-  if (
-    connections.length === 0
-  ) {
+  if (connections.length === 0) {
 
-    alert(
-      "ยังไม่มีเส้นให้ย้อนกลับ"
-    );
+    alert("ยังไม่มีเส้นให้ย้อนกลับ");
 
     return;
 
@@ -1890,7 +1806,6 @@ function undoLast() {
 
 
   connections.pop();
-
 
   drawLines();
 
@@ -1901,15 +1816,13 @@ function undoLast() {
 }
 
 
-/* =========================================
-   🗑️ ล้างทั้งหมด
-========================================= */
+/* ===============================
+   🗑️ ล้าง
+================================ */
 
 function clearLines() {
 
-  if (
-    connections.length === 0
-  ) return;
+  if (connections.length === 0) return;
 
 
   if (
@@ -1921,7 +1834,6 @@ function clearLines() {
 
   connections = [];
 
-
   drawLines();
 
   updateProgress();
@@ -1931,59 +1843,19 @@ function clearLines() {
 }
 
 
-/* =========================================
-   ⏱️ เวลา
-========================================= */
+/* ===============================
+   ➡️ ไปพาร์ทต่อไป
+================================ */
 
-function updateTimer() {
+function nextPart() {
 
-  const minutes =
-    String(
-      Math.floor(
-        seconds / 60
-      )
-    )
-    .padStart(
-      2,
-      "0"
-    );
-
-
-  const secs =
-    String(
-      seconds % 60
-    )
-    .padStart(
-      2,
-      "0"
-    );
-
-
-  document
-  .getElementById("timer")
-  .textContent =
-    minutes +
-    ":" +
-    secs;
-
-}
-
-
-/* =========================================
-   🏆 ส่งคำตอบ
-========================================= */
-
-function submitGame() {
-
-  if (
-    connections.length !== 14
-  ) {
+  if (connections.length !== 7) {
 
     alert(
-      "⚠️ กรุณาโยงเส้นให้ครบ 14 เส้น\n\n" +
+      "⚠️ กรุณาโยงเส้นให้ครบทั้ง 7 ข้อก่อน\n\n" +
       "ตอนนี้โยงแล้ว " +
       connections.length +
-      " / 14"
+      " / 7"
     );
 
     return;
@@ -1991,147 +1863,202 @@ function submitGame() {
   }
 
 
-  clearInterval(
-    timerInterval
-  );
+  if (currentPart === 1) {
+
+    /* เก็บคำตอบพาร์ท 1 */
+
+    part1Connections =
+      [...connections];
 
 
-  let score = 0;
+    /* โหลดพาร์ท 2 */
+
+    loadPart(2);
+
+    return;
+
+  }
 
 
-  connections.forEach(
-    connection => {
+  /* เก็บคำตอบพาร์ท 2 */
+
+  part2Connections =
+    [...connections];
 
 
-      const correct =
-        correctAnswers[
-          connection.kingdom
-        ];
+  submitGame();
+
+}
 
 
-      if (
-        correct &&
-        correct.includes(
-          connection.answer
-        )
-      ) {
+/* ===============================
+   ⏱️ เวลา
+================================ */
 
-        score++;
-
-      }
-
-    }
-
-  );
-
+function updateTimer() {
 
   const minutes =
-    String(
-      Math.floor(
-        seconds / 60
-      )
-    )
-    .padStart(
-      2,
-      "0"
-    );
+    String(Math.floor(seconds / 60))
+    .padStart(2, "0");
 
 
   const secs =
-    String(
-      seconds % 60
-    )
-    .padStart(
-      2,
-      "0"
-    );
+    String(seconds % 60)
+    .padStart(2, "0");
+
+
+  document.getElementById("timer")
+    .textContent =
+    minutes + ":" + secs;
+
+}
+
+
+/* ===============================
+   🏆 ตรวจคำตอบ
+================================ */
+
+function submitGame() {
+
+  clearInterval(timerInterval);
+
+
+  let part1Score = 0;
+  let part2Score = 0;
+
+
+  /* PART 1 */
+
+  part1Connections.forEach(connection => {
+
+    if (
+      part1.correct[connection.kingdom] ===
+      connection.answer
+    ) {
+
+      part1Score++;
+
+    }
+
+  });
+
+
+  /* PART 2 */
+
+  part2Connections.forEach(connection => {
+
+    if (
+      part2.correct[connection.kingdom] ===
+      connection.answer
+    ) {
+
+      part2Score++;
+
+    }
+
+  });
+
+
+  const totalScore =
+    part1Score +
+    part2Score;
+
+
+  const minutes =
+    String(Math.floor(seconds / 60))
+    .padStart(2, "0");
+
+
+  const secs =
+    String(seconds % 60)
+    .padStart(2, "0");
 
 
   const time =
-    minutes +
-    ":" +
-    secs;
+    minutes + ":" + secs;
 
 
-  document
-  .getElementById("gamePage")
-  .style.display =
-    "none";
+  document.getElementById("gamePage")
+    .style.display = "none";
 
 
-  document
-  .getElementById("resultPage")
-  .style.display =
-    "block";
+  document.getElementById("resultPage")
+    .style.display = "block";
 
 
-  document
-  .getElementById("resultName")
-  .textContent =
+  document.getElementById("resultName")
+    .textContent =
     "👤 " +
-    document
-    .getElementById("studentName")
+    document.getElementById("studentName")
     .value;
 
 
-  document
-  .getElementById("scoreText")
-  .textContent =
-    score +
+  document.getElementById("scoreText")
+    .textContent =
+    totalScore +
     " / 14 คะแนน";
 
 
-  document
-  .getElementById("timeText")
-  .textContent =
-    "⏱️ ใช้เวลา " +
+  document.getElementById("partScoreText")
+    .innerHTML =
+    "🏛️ พาร์ทที่ 1: <b>" +
+    part1Score +
+    " / 7</b><br>" +
+
+    "📍 พาร์ทที่ 2: <b>" +
+    part2Score +
+    " / 7</b>";
+
+
+  document.getElementById("timeText")
+    .textContent =
+    "⏱️ ใช้เวลาทั้งหมด " +
     time;
 
 
   sendToGoogleSheet(
-    score,
+    totalScore,
+    part1Score,
+    part2Score,
     time
   );
 
 }
 
 
-/* =========================================
+/* ===============================
    📤 ส่ง Google Sheets
-========================================= */
+================================ */
 
 function sendToGoogleSheet(
-  score,
+  totalScore,
+  part1Score,
+  part2Score,
   time
 ) {
 
   const data = {
 
     name:
-      document
-      .getElementById("studentName")
-      .value,
-
+      document.getElementById("studentName").value,
 
     classroom:
-      document
-      .getElementById("studentClass")
-      .value,
-
+      document.getElementById("studentClass").value,
 
     number:
-      document
-      .getElementById("studentNumber")
-      .value,
+      document.getElementById("studentNumber").value,
 
+    part1Score:
+      part1Score,
+
+    part2Score:
+      part2Score,
 
     score:
-      score,
-
+      totalScore,
 
     total:
       14,
-
 
     time:
       time
@@ -2140,9 +2067,7 @@ function sendToGoogleSheet(
 
 
   fetch(
-
     GOOGLE_SCRIPT_URL,
-
     {
 
       method: "POST",
@@ -2156,12 +2081,10 @@ function sendToGoogleSheet(
 
       },
 
-
       body:
         JSON.stringify(data)
 
     }
-
   )
 
   .then(() => {
@@ -2185,19 +2108,15 @@ function sendToGoogleSheet(
 }
 
 
-/* =========================================
-   📱 เลื่อน / หมุนจอ
-
-   เส้นจะคำนวณใหม่
-========================================= */
+/* ===============================
+   📱 ปรับเส้นเมื่อเลื่อนจอ
+================================ */
 
 window.addEventListener(
   "resize",
   () => {
 
-    if (
-      connections.length > 0
-    ) {
+    if (connections.length > 0) {
 
       drawLines();
 
@@ -2211,18 +2130,14 @@ window.addEventListener(
   "scroll",
   () => {
 
-    if (
-      connections.length > 0
-    ) {
+    if (connections.length > 0) {
 
       drawLines();
 
     }
 
 
-    if (
-      isDragging
-    ) {
+    if (isDragging) {
 
       updateTempLine();
 
