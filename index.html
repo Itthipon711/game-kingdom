@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>เกมจับคู่แคว้นโบราณ</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans Thai", sans-serif;
+      background: linear-gradient(135deg, #f6e7c1, #dcefdc);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.15);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #7b9e6b;
+    }
+
+    button {
+      border: none;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .start-btn,
+    .submit-btn {
+      width: 100%;
+      background: #4f7d45;
+      color: white;
+      margin-top: 15px;
+    }
+
+    .game {
+      display: none;
+    }
+
+    .result {
+      display: none;
+      text-align: center;
+    }
+
+    .timer-box {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      background: #fff3cd;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .progress {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .game-area {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 25px;
+    }
+
+    .column {
+      background: #f8f8f8;
+      padding: 15px;
+      border-radius: 15px;
+    }
+
+    .kingdom {
+      padding: 15px;
+      background: #dceefd;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border: 3px solid transparent;
+      font-weight: bold;
+    }
+
+    .kingdom:hover {
+      background: #c7e3fa;
+    }
+
+    .kingdom.selected {
+      border-color: #3976a3;
+      background: #b9dbf5;
+    }
+
+    .kingdom.completed {
+      background: #d8efd2;
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .answer {
+      padding: 14px;
+      background: #fff3cd;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 3px solid transparent;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    .answer:hover {
+      background: #ffe69c;
+    }
+
+    .answer.selected-answer {
+      border-color: #d69e00;
+      background: #ffe08a;
+    }
+
+    .answer.used-by-other {
+      opacity: .35;
+      pointer-events: none;
+    }
+
+    .selected-info {
+      background: #eaf5e6;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .hint {
+      text-align: center;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .score {
+      font-size: 35px;
+      font-weight: bold;
+      color: #4f7d45;
+    }
+
+    @media (max-width: 800px) {
+      .game-area {
+        grid-template-columns: 1fr;
+      }
+
+      .answers {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        padding: 10px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- หน้าเริ่มต้น -->
+  <div class="card" id="startPage">
+
+    <h1>🏛️ เกมจับคู่แคว้นโบราณ</h1>
+
+    <p class="subtitle">
+      จับคู่แคว้นโบราณกับหลักฐานสำคัญและจังหวัดในปัจจุบัน
+    </p>
+
+    <input
+      type="text"
+      id="studentName"
+      placeholder="👤 ชื่อ-นามสกุล"
+    >
+
+    <input
+      type="text"
+      id="studentClass"
+      placeholder="🏫 ชั้น เช่น ม.1/1"
+    >
+
+    <input
+      type="number"
+      id="studentNumber"
+      placeholder="🔢 เลขที่"
+    >
+
+    <button class="start-btn" onclick="startGame()">
+      ▶️ เริ่มเกม
+    </button>
+
+  </div>
+
+
+  <!-- หน้าเกม -->
+  <div class="card game" id="gamePage">
+
+    <h1>🎮 จับคู่ให้ถูกต้อง</h1>
+
+    <div class="timer-box">
+      ⏱️ เวลา: <span id="timer">00:00</span>
+    </div>
+
+    <div class="progress">
+      จับคู่แล้ว <span id="progress">0</span> / 14 ข้อ
+    </div>
+
+    <div class="selected-info" id="selectedInfo">
+      👈 กรุณาเลือกแคว้นก่อน
+    </div>
+
+    <div class="hint">
+      💡 เลือกแคว้น 1 แคว้น แล้วเลือกคำตอบที่เกี่ยวข้องจำนวน 2 ข้อ
+    </div>
+
+    <div class="game-area">
+
+      <!-- ฝั่งซ้าย -->
+      <div class="column">
+
+        <h2>🏛️ แคว้น</h2>
+
+        <div id="kingdomList"></div>
+
+      </div>
+
+
+      <!-- ฝั่งขวา -->
+      <div class="column">
+
+        <h2>🧩 คำตอบ</h2>
+
+        <div class="answers" id="answerList"></div>
+
+      </div>
+
+    </div>
+
+    <button class="submit-btn" onclick="submitGame()">
+      📤 ส่งคำตอบและดูคะแนน
+    </button>
+
+    <div class="loading" id="loading">
+      ⏳ กำลังบันทึกคะแนน...
+    </div>
+
+  </div>
+
+
+  <!-- หน้าผลลัพธ์ -->
+  <div class="card result" id="resultPage">
+
+    <h1>🎉 ทำเกมเสร็จแล้ว!</h1>
+
+    <p id="resultName"></p>
+
+    <div class="score" id="scoreText"></div>
+
+    <p id="timeText"></p>
+
+    <p id="saveStatus">
+      📤 กำลังส่งคะแนนให้ครู...
+    </p>
+
+    <button onclick="location.reload()">
+      🔄 เล่นใหม่
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  // ==========================================
+  // 🔗 GOOGLE APPS SCRIPT URL ของครู
+  // ==========================================
+
+  const GOOGLE_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbzn1YvetTuJpB8zmcdUhspvxBMR1JOBO-dsHHCDhfxMbbeIIZF-VEGQGpH6kCoW5pn4OA/exec";
+
+
+  // ==========================================
+  // 🏛️ ข้อมูลแคว้น
+  // ==========================================
+
+  const kingdoms = [
+    "ทวารวดี",
+    "ละโว้",
+    "ลังกาสุกะ",
+    "ศรีวิชัย",
+    "ตามพรลิงค์",
+    "โคตรบูรณ์",
+    "หริภุญชัย"
+  ];
+
+
+  // ==========================================
+  // 🧩 คำตอบทั้งหมด
+  // ==========================================
+
+  const answers = [
+    "พระธาตุพนม",
+    "เมืองโบราณบ้านจาเละ",
+    "ธรรมจักรศิลากับกวางหมอบ",
+    "พระปรางค์สามยอด",
+    "วัดจามเทวี",
+    "พระบรมธาตุเจดีย์ จังหวัดนครศรีธรรมราช",
+    "พระบรมธาตุไชยา",
+    "จังหวัดลำพูน",
+    "จังหวัดนครศรีธรรมราช",
+    "จังหวัดนครพนม",
+    "จังหวัดสุราษฎร์ธานี",
+    "จังหวัดปัตตานี",
+    "จังหวัดลพบุรี",
+    "จังหวัดนครปฐม"
+  ];
+
+
+  // ==========================================
+  // ✅ คำตอบที่ถูกต้อง
+  // ==========================================
+
+  const correctAnswers = {
+
+    "ทวารวดี": [
+      "ธรรมจักรศิลากับกวางหมอบ",
+      "จังหวัดนครปฐม"
+    ],
+
+    "ละโว้": [
+      "พระปรางค์สามยอด",
+      "จังหวัดลพบุรี"
+    ],
+
+    "ลังกาสุกะ": [
+      "เมืองโบราณบ้านจาเละ",
+      "จังหวัดปัตตานี"
+    ],
+
+    "ศรีวิชัย": [
+      "พระบรมธาตุไชยา",
+      "จังหวัดสุราษฎร์ธานี"
+    ],
+
+    "ตามพรลิงค์": [
+      "พระบรมธาตุเจดีย์ จังหวัดนครศรีธรรมราช",
+      "จังหวัดนครศรีธรรมราช"
+    ],
+
+    "โคตรบูรณ์": [
+      "พระธาตุพนม",
+      "จังหวัดนครพนม"
+    ],
+
+    "หริภุญชัย": [
+      "วัดจามเทวี",
+      "จังหวัดลำพูน"
+    ]
+
+  };
+
+
+  // ==========================================
+  // 🎮 ตัวแปรเกม
+  // ==========================================
+
+  let selectedKingdom = null;
+
+  let studentAnswers = {};
+
+  let seconds = 0;
+
+  let timerInterval = null;
+
+
+  // ==========================================
+  // 🔀 สุ่มตำแหน่งคำตอบ
+  // ==========================================
+
+  function shuffle(array) {
+
+    let newArray = [...array];
+
+    for (let i = newArray.length - 1; i > 0; i--) {
+
+      let j = Math.floor(Math.random() * (i + 1));
+
+      [newArray[i], newArray[j]] =
+        [newArray[j], newArray[i]];
+
+    }
+
+    return newArray;
+  }
+
+
+  // ==========================================
+  // ▶️ เริ่มเกม
+  // ==========================================
+
+  function startGame() {
+
+    const name =
+      document.getElementById("studentName").value.trim();
+
+    const classroom =
+      document.getElementById("studentClass").value.trim();
+
+    const number =
+      document.getElementById("studentNumber").value.trim();
+
+
+    if (!name || !classroom || !number) {
+
+      alert("⚠️ กรุณากรอกชื่อ ชั้น และเลขที่ให้ครบ");
+
+      return;
+    }
+
+
+    document.getElementById("startPage").style.display = "none";
+
+    document.getElementById("gamePage").style.display = "block";
+
+
+    renderKingdoms();
+
+    renderAnswers();
+
+
+    timerInterval = setInterval(() => {
+
+      seconds++;
+
+      updateTimer();
+
+    }, 1000);
+
+  }
+
+
+  // ==========================================
+  // ⏱️ อัปเดตเวลา
+  // ==========================================
+
+  function updateTimer() {
+
+    const minutes =
+      String(Math.floor(seconds / 60)).padStart(2, "0");
+
+    const secs =
+      String(seconds % 60).padStart(2, "0");
+
+    document.getElementById("timer").textContent =
+      minutes + ":" + secs;
+
+  }
+
+
+  // ==========================================
+  // 🏛️ แสดงแคว้น
+  // ==========================================
+
+  function renderKingdoms() {
+
+    const list =
+      document.getElementById("kingdomList");
+
+    list.innerHTML = "";
+
+
+    kingdoms.forEach(kingdom => {
+
+      const div =
+        document.createElement("div");
+
+      div.className = "kingdom";
+
+      div.textContent =
+        "🏛️ แคว้น" + kingdom;
+
+
+      if (
+        studentAnswers[kingdom] &&
+        studentAnswers[kingdom].length === 2
+      ) {
+
+        div.classList.add("completed");
+
+      }
+
+
+      if (selectedKingdom === kingdom) {
+
+        div.classList.add("selected");
+
+      }
+
+
+      div.onclick = () => {
+
+        selectedKingdom = kingdom;
+
+        renderKingdoms();
+
+        renderAnswers();
+
+        updateSelectedInfo();
+
+      };
+
+
+      list.appendChild(div);
+
+    });
+
+  }
+
+
+  // ==========================================
+  // 🧩 แสดงคำตอบ
+  // ==========================================
+
+  function renderAnswers() {
+
+    const list =
+      document.getElementById("answerList");
+
+    list.innerHTML = "";
+
+
+    const shuffledAnswers =
+      shuffle(answers);
+
+
+    shuffledAnswers.forEach(answer => {
+
+      const div =
+        document.createElement("div");
+
+      div.className = "answer";
+
+      div.textContent = answer;
+
+
+      // ตรวจว่าคำตอบนี้ถูกใช้กับแคว้นอื่นหรือไม่
+
+      let usedByOther = false;
+
+
+      Object.keys(studentAnswers).forEach(kingdom => {
+
+        if (
+          kingdom !== selectedKingdom &&
+          studentAnswers[kingdom].includes(answer)
+        ) {
+
+          usedByOther = true;
+
+        }
+
+      });
+
+
+      if (usedByOther) {
+
+        div.classList.add("used-by-other");
+
+      }
+
+
+      // ตรวจว่าเป็นคำตอบที่เลือกในแคว้นปัจจุบัน
+
+      if (
+        selectedKingdom &&
+        studentAnswers[selectedKingdom] &&
+        studentAnswers[selectedKingdom].includes(answer)
+      ) {
+
+        div.classList.add("selected-answer");
+
+      }
+
+
+      div.onclick = () => {
+
+        chooseAnswer(answer);
+
+      };
+
+
+      list.appendChild(div);
+
+    });
+
+  }
+
+
+  // ==========================================
+  // 🎯 เลือกคำตอบ
+  // ==========================================
+
+  function chooseAnswer(answer) {
+
+    if (!selectedKingdom) {
+
+      alert("👈 กรุณาเลือกแคว้นก่อน");
+
+      return;
+
+    }
+
+
+    if (!studentAnswers[selectedKingdom]) {
+
+      studentAnswers[selectedKingdom] = [];
+
+    }
+
+
+    const currentAnswers =
+      studentAnswers[selectedKingdom];
+
+
+    // ถ้าเลือกอยู่แล้ว ให้ยกเลิก
+
+    const index =
+      currentAnswers.indexOf(answer);
+
+
+    if (index !== -1) {
+
+      currentAnswers.splice(index, 1);
+
+    }
+
+    else {
+
+      // ถ้าเลือกครบ 2 ข้อแล้ว
+
+      if (currentAnswers.length >= 2) {
+
+        alert(
+          "⚠️ แคว้นนี้เลือกครบ 2 คำตอบแล้ว\n\nหากต้องการเปลี่ยน ให้กดคำตอบเดิมเพื่อยกเลิกก่อน"
+        );
+
+        return;
+
+      }
+
+
+      currentAnswers.push(answer);
+
+    }
+
+
+    renderKingdoms();
+
+    renderAnswers();
+
+    updateProgress();
+
+    updateSelectedInfo();
+
+  }
+
+
+  // ==========================================
+  // 📊 ความคืบหน้า
+  // ==========================================
+
+  function updateProgress() {
+
+    let total = 0;
+
+
+    Object.values(studentAnswers).forEach(items => {
+
+      total += items.length;
+
+    });
+
+
+    document.getElementById("progress").textContent =
+      total;
+
+  }
+
+
+  // ==========================================
+  // ℹ️ ข้อมูลแคว้นที่เลือก
+  // ==========================================
+
+  function updateSelectedInfo() {
+
+    const info =
+      document.getElementById("selectedInfo");
+
+
+    if (!selectedKingdom) {
+
+      info.textContent =
+        "👈 กรุณาเลือกแคว้นก่อน";
+
+      return;
+
+    }
+
+
+    const selected =
+      studentAnswers[selectedKingdom] || [];
+
+
+    info.textContent =
+      "🏛️ แคว้น" +
+      selectedKingdom +
+      " — เลือกแล้ว " +
+      selected.length +
+      " / 2 ข้อ";
+
+  }
+
+
+  // ==========================================
+  // 🏆 ส่งเกม
+  // ==========================================
+
+  function submitGame() {
+
+    // ตรวจว่าตอบครบหรือยัง
+
+    let totalAnswers = 0;
+
+
+    Object.values(studentAnswers).forEach(items => {
+
+      totalAnswers += items.length;
+
+    });
+
+
+    if (totalAnswers !== 14) {
+
+      alert(
+        "⚠️ คุณตอบไปแล้ว " +
+        totalAnswers +
+        " / 14 ข้อ\n\nกรุณาจับคู่ให้ครบก่อนส่ง"
+      );
+
+      return;
+
+    }
+
+
+    // ตรวจว่าแต่ละแคว้นมี 2 คำตอบ
+
+    for (const kingdom of kingdoms) {
+
+      if (
+        !studentAnswers[kingdom] ||
+        studentAnswers[kingdom].length !== 2
+      ) {
+
+        alert(
+          "⚠️ กรุณาตรวจสอบแคว้น" +
+          kingdom +
+          " ให้เลือกคำตอบครบ 2 ข้อ"
+        );
+
+        return;
+
+      }
+
+    }
+
+
+    clearInterval(timerInterval);
+
+
+    // คำนวณคะแนน
+
+    let score = 0;
+
+
+    kingdoms.forEach(kingdom => {
+
+      studentAnswers[kingdom].forEach(answer => {
+
+        if (
+          correctAnswers[kingdom].includes(answer)
+        ) {
+
+          score++;
+
+        }
+
+      });
+
+    });
+
+
+    const minutes =
+      String(Math.floor(seconds / 60)).padStart(2, "0");
+
+    const secs =
+      String(seconds % 60).padStart(2, "0");
+
+    const time =
+      minutes + ":" + secs;
+
+
+    // เปลี่ยนหน้า
+
+    document.getElementById("gamePage").style.display =
+      "none";
+
+    document.getElementById("resultPage").style.display =
+      "block";
+
+
+    document.getElementById("resultName").textContent =
+      "👤 " +
+      document.getElementById("studentName").value;
+
+
+    document.getElementById("scoreText").textContent =
+      "🏆 " + score + " / 14 คะแนน";
+
+
+    document.getElementById("timeText").textContent =
+      "⏱️ ใช้เวลา " + time;
+
+
+    // ส่งคะแนนไป Google Sheets
+
+    sendToGoogleSheet(score, time);
+
+  }
+
+
+  // ==========================================
+  // 📤 ส่งข้อมูลไป Google Sheets
+  // ==========================================
+
+  function sendToGoogleSheet(score, time) {
+
+    const data = {
+
+      name:
+        document.getElementById("studentName").value,
+
+      classroom:
+        document.getElementById("studentClass").value,
+
+      number:
+        document.getElementById("studentNumber").value,
+
+      score:
+        score + "/14",
+
+      time:
+        time
+
+    };
+
+
+    fetch(GOOGLE_SCRIPT_URL, {
+
+      method: "POST",
+
+      mode: "no-cors",
+
+      headers: {
+        "Content-Type": "text/plain"
+      },
+
+      body: JSON.stringify(data)
+
+    })
+
+    .then(() => {
+
+      document.getElementById("saveStatus").textContent =
+        "✅ ส่งคะแนนให้ครูเรียบร้อยแล้ว";
+
+    })
+
+    .catch(() => {
+
+      document.getElementById("saveStatus").textContent =
+        "⚠️ ไม่สามารถยืนยันการส่งคะแนนได้";
+
+    });
+
+  }
+
+</script>
+
+</body>
+</html>
